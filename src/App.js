@@ -13,8 +13,11 @@ import { EditaPet } from "./pages/EditaPet/EditaPet";
 import { EditarServico } from "./pages/EditarServico/EditarServico";
 import { Pedidos } from "./pages/Pedidos/Pedidos";
 import { NovoPedido } from "./pages/NovoPedido/NovoPedido";
-import { Agendamento } from "./pages/Agendamento/Agendamento";
 import { NovoAgendamento } from "./pages/NovoAgendamento/NovoAgendamento";
+import { Servicos } from "./pages/Servicos/Servicos";
+import { Agendamento } from "./pages/Agendamento/Agendamento";
+
+
 
 function App() {
   return (
@@ -29,6 +32,7 @@ function App() {
           <Route path="/pets" element={<Pets />} />
           <Route path="/pets/novo" element={<NovoPet />} />
           <Route path="/pets/editar/:id" element={<EditaPet />} />
+          <Route path="/servicos" element={<Servicos/>}/>
           <Route path="/servicos/novo" element={<NovoServicos />} />
           <Route path="/servicos/editar/:id" element={<EditarServico/>} />
           <Route path="/pedidos" element={<Pedidos/>} />
