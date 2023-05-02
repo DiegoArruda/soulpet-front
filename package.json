@@ -10,6 +10,11 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.4",
     "dayjs": "^1.11.7",
+<<<<<<< HEAD
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+=======
+>>>>>>> ca2dd326aa0a6c1d160f761c6f265b22e074594a
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",

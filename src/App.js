@@ -4,6 +4,7 @@ import { Home } from "./pages/Home/Home";
 import { NovoCliente } from "./pages/NovoCliente/NovoCliente";
 import { Clientes } from "./pages/Clientes/Clientes";
 import { EditaCliente } from "./pages/EditaCliente/EditaCliente";
+import { NovoProduto } from "./pages/NovoProduto/NovoProduto";
 import { NovoPet } from "./pages/NovoPet/NovoPet";
 import { NovoServicos } from "./pages/NovoServicos/NovoServicos";
 import { DetalheClientes } from "./pages/DetalheClientes/DetalheClientes";
@@ -32,6 +33,8 @@ function App() {
           <Route path="/servicos/editar/:id" element={<EditarServico/>} />
           <Route path="/pedidos" element={<Pedidos/>} />
           <Route path="/pedidos/novo" element={<NovoPedido/>} /> 
+          <Route path="/produtos/novo" element={<NovoProduto />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
