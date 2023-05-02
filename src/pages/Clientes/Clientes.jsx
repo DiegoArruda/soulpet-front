@@ -72,7 +72,7 @@ export function Clientes() {
                             {clientes.map(cliente => {
                                 return (
                                     <tr key={cliente.id}>
-                                        <td>{cliente.nome}</td>
+                                        <td> <Link to={`/clientes/detalhes/${cliente.id}`}>{cliente.nome}</Link></td>
                                         <td>{cliente.email}</td>
                                         <td>{cliente.telefone}</td>
                                         <td className="d-flex gap-2">
