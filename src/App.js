@@ -13,7 +13,9 @@ import { EditaPet } from "./pages/EditaPet/EditaPet";
 import { EditarServico } from "./pages/EditarServico/EditarServico";
 import { Pedidos } from "./pages/Pedidos/Pedidos";
 import { NovoPedido } from "./pages/NovoPedido/NovoPedido";
+import { NovoAgendamento } from "./pages/NovoAgendamento/NovoAgendamento";
 import { Servicos } from "./pages/Servicos/Servicos";
+import { Agendamento } from "./pages/Agendamento/Agendamento";
 
 
 
@@ -36,7 +38,8 @@ function App() {
           <Route path="/pedidos" element={<Pedidos/>} />
           <Route path="/pedidos/novo" element={<NovoPedido/>} /> 
           <Route path="/produtos/novo" element={<NovoProduto />} />
-
+          <Route path="/agendamentos" element={<Agendamento />} />
+          <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
         </Route>
       </Routes>
     </BrowserRouter>
