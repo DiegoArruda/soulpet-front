@@ -13,8 +13,13 @@ import { EditaPet } from "./pages/EditaPet/EditaPet";
 import { EditarServico } from "./pages/EditarServico/EditarServico";
 import { Pedidos } from "./pages/Pedidos/Pedidos";
 import { NovoPedido } from "./pages/NovoPedido/NovoPedido";
+import { NovoAgendamento } from "./pages/NovoAgendamento/NovoAgendamento";
 import { Servicos } from "./pages/Servicos/Servicos";
+<<<<<<< HEAD
 import { Produtos } from "./pages/Produtos/Produtos";
+=======
+import { Agendamento } from "./pages/Agendamento/Agendamento";
+>>>>>>> 17f35bf327c1fbd8763f636765b682f165dfe4a3
 
 
 
@@ -38,7 +43,12 @@ function App() {
           <Route path="/pedidos/novo" element={<NovoPedido/>} /> 
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/produtos/novo" element={<NovoProduto />} />
+<<<<<<< HEAD
           
+=======
+          <Route path="/agendamentos" element={<Agendamento />} />
+          <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
+>>>>>>> 17f35bf327c1fbd8763f636765b682f165dfe4a3
         </Route>
       </Routes>
     </BrowserRouter>
