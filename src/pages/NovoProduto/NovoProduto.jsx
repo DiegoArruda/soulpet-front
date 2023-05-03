@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 // Exportação do componente
@@ -12,7 +12,7 @@ export function NovoProduto(){
 
     // registro de variáveis
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const dayjs = require("dayjs");
     const today = dayjs();
 
@@ -28,7 +28,7 @@ export function NovoProduto(){
         .then(responde =>{
             toast.success("Produto adicionado", 
             { position: "bottom-right", duration: 2000 });
-            // navigate("/");
+            navigate("/produtos");
         })
         .catch(error =>{
             toast.error("Algo deu errado", 
