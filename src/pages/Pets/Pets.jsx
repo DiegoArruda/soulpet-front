@@ -1,3 +1,4 @@
+// Importações necessárias
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
@@ -5,12 +6,19 @@ import { Link } from "react-router-dom";
 import { Loader } from "../../components/Loader/Loader";
 import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
+import { Pagination } from "../../components/Pagination/Pagination";
 
 export function Pets() {
-  const [pets, setPets] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
   const [show, setShow] = useState(false);
   const [idPet, setIdPet] = useState(null);
+  // variáveis de paginação
+  const [pets, setPets] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagesToShow, setPagesToShow] = useState(5);
+  const limit = 10; // número máximo de itens por página
 
+  //Funções Modal
   const handleClose = () => {
     setIdPet(null);
     setShow(false);
@@ -20,21 +28,31 @@ export function Pets() {
     setShow(true);
   };
 
+  // Funções de iniciar a tabela na página atual
   useEffect(() => {
     initializeTable();
-  }, []);
+  }, [currentPage]);
 
   function initializeTable() {
     axios
-      .get("http://localhost:3001/pets")
+      .get(`http://localhost:3001/pets?page=${currentPage}&limit=${limit}`)
       .then((response) => {
-        setPets(response.data);
+        setPets(response.data.listaPets);
+        setTotalPages(response.data.totalPages);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  // Função trocar de página
+  function handlePageChange(page) {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  }
+
+  // Função deletar Pet
   function onDelete() {
     axios
       .delete(`http://localhost:3001/pets/${idPet}`)
@@ -68,6 +86,7 @@ export function Pets() {
       {pets === null ? (
         <Loader />
       ) : (
+        <>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -105,8 +124,18 @@ export function Pets() {
             })}
           </tbody>
         </Table>
-      )}
-      <Modal show={show} onHide={handleClose}>
+
+        <div className="d-flex justify-content-center align-items-center">
+          <Pagination
+          total={totalPages}
+          currentPage={currentPage}
+          pagesToShow={pagesToShow}
+          onChangePage={handlePageChange}
+          />
+        </div>
+        
+
+        <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmação</Modal.Title>
         </Modal.Header>
@@ -120,6 +149,8 @@ export function Pets() {
           </Button>
         </Modal.Footer>
       </Modal>
+      </>
+      )}
     </div>
   );
 }
