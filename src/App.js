@@ -17,7 +17,6 @@ import { NovoAgendamento } from "./pages/NovoAgendamento/NovoAgendamento";
 import { Servicos } from "./pages/Servicos/Servicos";
 import { Agendamentos } from "./pages/Agendamentos/Agendamentos";
 import { Produtos } from "./pages/Produtos/Produtos";
-import { Agendamento } from "./pages/Agendamento/Agendamento";
 import { EditaPedido } from "./pages/EditaPedido/editaPedido";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Graficos } from "./pages/Graficos/Graficos";
@@ -48,14 +47,11 @@ function App() {
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/produtos/editar/:id" element={<EditarProdutos/>} />
           <Route path="/produtos/novo" element={<NovoProduto />} />
-          <Route path="/agendamentos" element={<Agendamentos />} />
           <Route path="/pedidos/editar/:id" element={<EditaPedido/>} />
-          <Route path="/agendamentos" element={<Agendamento />} />
+          <Route path="/agendamentos" element={<Agendamentos />} />
           <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/dashboard/graficos" element= {<Graficos/>} />          
-          <Route path="/agendamentos" element={<Agendamento />} />
-          <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
         </Route>
       </Routes>
     </BrowserRouter>
