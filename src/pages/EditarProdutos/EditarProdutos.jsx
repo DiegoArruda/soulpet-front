@@ -1,45 +1,50 @@
-// Importações necessárias
 import axios from "axios";
-import moment from 'moment-timezone';
+import { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 
+export function EditarProdutos() {
 
-// Exportação do componente
-export function NovoProduto(){
-
-    // registro de variáveis
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: {errors}, reset } = useForm();
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    function onSubmit(data) {
+        axios.put(`http://localhost:3001/produtos/${id}`, data)
+        .then((response) =>{
+            toast.success("Produto editado", {
+                position: "bottom-right", 
+                duration: 2000
+            });
+            navigate("/produtos");
+        })
+        .catch((error) =>{
+            toast.error("Algo deu errado", {
+                position: "bottom-right", 
+                duration: 2000
+            });
+            console.log(error);
+        });
+    }
+
+    useEffect(() =>{
+        axios.get(`http://localhost:3001/produtos/${id}`)
+        .then((response) =>{
+            const { nome, preco, descricao, desconto, dataDesconto, categoria } = response.data;
+            reset({ nome, preco, descricao, desconto, dataDesconto, categoria });
+        });
+    }, [id, reset]);
+
     const dayjs = require("dayjs");
     const today = dayjs();
 
 
-
-
-    // Função para enviar
-    function onSubmit(data) {
-        const dataAlterada = moment.tz(data.dataDesconto, 'America/Sao_Paulo');
-        data.dataDesconto = dataAlterada;
-        // Ligação com o banco de dados
-        axios.post("http://localhost:3001/produtos", data)
-        .then(responde =>{
-            toast.success("Produto adicionado", 
-            { position: "bottom-right", duration: 2000 });
-            navigate("/produtos");
-        })
-        .catch(error =>{
-            toast.error("Algo deu errado", 
-            { position: "bottom-right", duration: 2000 });
-            console.log(error);
-        });
-    }
-    return(
+    return (
         <>
         <div className="container">
-            <h1>Novo Produto</h1>
+            <h1>Editar Produtos</h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3">
                     <Form.Label>Nome</Form.Label>
@@ -142,7 +147,7 @@ export function NovoProduto(){
                 </Form.Group>
 
             <Button variant="primary" type="submit">
-                Cadastrar
+                Editar
             </Button>
             </Form>
         </div>

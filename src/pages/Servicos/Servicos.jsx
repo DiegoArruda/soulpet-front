@@ -62,7 +62,7 @@ export function Servicos() {
                                         </Button>
                                     </td>
                                 </tr>
-                            ))};
+                            ))}
                     </tbody>
                 </Table>
             }

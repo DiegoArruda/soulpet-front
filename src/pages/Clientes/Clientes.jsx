@@ -10,7 +10,7 @@ export function Clientes() {
     const [clientes, setClientes] = useState(null);
     const [show, setShow] = useState(false);
     const [idCliente, setIdCliente] = useState(null);
-  
+
     const handleClose = () => {
         setIdCliente(null);
         setShow(false)
@@ -47,13 +47,32 @@ export function Clientes() {
         handleClose();
     }
 
+    function gerarPdf() {
+        axios.get('http://localhost:3001/cliente/relatorio', {
+            responseType: 'blob'
+        })
+            .then(response => {
+                const file = new Blob([response.data], { type: 'application/pdf' });
+                const fileURL = URL.createObjectURL(file);
+                window.open(fileURL);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     return (
         <div className="clientes container">
             <div className="d-flex justify-content-between align-items-center">
                 <h1>Clientes</h1>
-                <Button as={Link} to="/clientes/novo">
-                    <i className="bi bi-plus-lg me-2"></i> Cliente
-                </Button>
+                <div>
+                    <Button as={Link} to="/clientes/novo">
+                        <i className="bi bi-plus-lg me-2"></i> Cliente
+                    </Button>
+                    <Button onClick={gerarPdf} className="m-3">
+                    <i class="bi bi-filetype-pdf"></i> Gerar PDF
+                    </Button>
+                </div>
             </div>
             {
                 clientes === null ?
