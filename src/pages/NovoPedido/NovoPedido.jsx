@@ -1,23 +1,34 @@
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 export function NovoPedido() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "produtos",
-  });
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [produtos, setProdutos] = useState([]);
+  const [clientes, setClientes] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/produtos")
+      .then(response => {
+        setProdutos(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    axios.get("http://localhost:3001/clientes")
+      .then(response => {
+        setClientes(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [])
 
   function onSubmit(data) {
     axios
@@ -27,7 +38,7 @@ export function NovoPedido() {
           position: "bottom-right",
           duration: 2000,
         });
-        navigate("/pets");
+        navigate("/pedidos");
       })
       .catch((error) => {
         toast.error("Algo deu errado.", {
@@ -38,101 +49,56 @@ export function NovoPedido() {
       });
   }
 
-  const dayjs = require("dayjs");
-  const today = dayjs();
-
   return (
     <div className="container">
       <h1>Novo Pedido</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3">
-          <Form.Label>Cliente</Form.Label>
-          <Form.Control
-            type="text"
-            className={errors.cliente && "is-invalid"}
-            {...register("cliente", {
-              required: "O nome do cliente é obrigatório.",
-              maxLength: { value: 130, message: "Limite de 130 caracteres." },
-            })}
-          />
-          {errors.cliente && (
-            <Form.Text className="invalid-feedback">
-              {errors.cliente.message}
-            </Form.Text>
-          )}
+          <Form.Control type="hidden" {...register("codigo")} value={uuidv4()} />
         </Form.Group>
-
         <Form.Group className="mb-3">
-          <Form.Label>Data</Form.Label>
-          <Form.Control
-            type="date"
-            className={errors.data && "is-invalid"}
-            {...register("data", {
-              required: "A data é obrigatória.",
-            })}
-          />
-          {errors.data && (
-            <Form.Text className="invalid-feedback">
-              {errors.data.message}
-            </Form.Text>
-          )}
+          <Form.Label>Quantidade</Form.Label>
+          <Form.Control type="number" className={errors.quantidade && "is-invalid"} {...register("quantidade", {
+            required: "A quantidade é obrigatória.",
+            maxLength: { value: 255, message: "Limite de 255 caracteres." }
+          })} />
+          {errors.quantidade && <Form.Text className="invalid-feedback">{errors.quantidade.message}</Form.Text>}
         </Form.Group>
-
         <Form.Group className="mb-3">
-          {fields.map((item, index) => (
-            <div key={item.id}>
-              <Form.Label>Produto:</Form.Label>
-              <Form.Control
-                type="text"
-                className={errors.produtos && "is-invalid"}
-                {...register(`produtos[${index}].nome`, {
-                  required: "O nome do produto é obrigatório.",
-                  maxLength: {
-                    value: 130,
-                    message: "Limite de 130 caracteres.",
-                  },
-                })}
-              />
-              <Form.Control
-                type="text"
-                className={errors.produtos && "is-invalid"}
-                {...register(`produtos[${index}].quantidade`, {
-                  required: "A quantidade é obrigatória.",
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "A quantidade deve ser um número inteiro.",
-                  },
-                })}
-              />
-              <Button variant="danger" onClick={() => remove(index)} className="mt-3 mb-3">
-                Remover
-              </Button>
-            </div>
-          ))}
-          <Button
-            variant="primary"
-            onClick={() => append({ nome: "", quantidade: 0 })}
-            >
-            Adicionar produto
-            </Button>
-            {errors.produtos && (
-            <Form.Text className="invalid-feedback">
-            {errors.produtos.message}
-            </Form.Text>
+          <Form.Label>Clientes</Form.Label>
+          <Form.Select className={errors.clienteId && "is-invalid"}
+            {...register("clienteId", { required: "Escolha um cliente para poder efetuar o cadastro." })}>
+            <option value=""> Escolha um cliente...</option>
+            {clientes.map(cliente =>
+              <option value={cliente.id}>{cliente.nome}</option>
             )}
-            </Form.Group>
-            
-                <Button variant="primary" type="submit">
-                  Cadastrar
-                </Button>
-              </Form>
-            </div>
-            );
-            }
-            
-            
-            
-            
-            
-            
-            
+          </Form.Select>
+          {errors.clienteId && <Form.Text className="invalid-feedback">{errors.clienteId.message}</Form.Text>}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Produtos</Form.Label>
+          <Form.Select className={errors.produtoId && "is-invalid"}
+            {...register("produtoId", { required: "Escolha um produto para poder efetuar o cadastro." })}>
+            <option value=""> Escolha um produto...</option>
+            {produtos.map(produto =>
+              <option value={produto.id}>{produto.nome}</option>
+            )}
+          </Form.Select>
+          {errors.produtoId && <Form.Text className="invalid-feedback">{errors.produtoId.message}</Form.Text>}
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Cadastrar
+        </Button>
+      </Form>
+    </div>
+  );
+}
+
+
+
+
+
+
+

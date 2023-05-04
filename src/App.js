@@ -22,6 +22,7 @@ import { Graficos } from "./pages/Graficos/Graficos";
 
 
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -45,7 +46,9 @@ function App() {
           <Route path="/agendamentos" element={<Agendamento />} />
           <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
           <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/dashboard/graficos" element= {<Graficos/>} />
+          <Route path="/dashboard/graficos" element= {<Graficos/>} />          
+          <Route path="/agendamentos" element={<Agendamento />} />
+          <Route path="/agendamentos/novo" element={<NovoAgendamento />} />
         </Route>
       </Routes>
     </BrowserRouter>

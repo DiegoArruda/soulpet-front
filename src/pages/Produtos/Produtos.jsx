@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, Form, InputGroup, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Loader } from "../../components/Loader/Loader";
+import { toast } from "react-hot-toast";
 
 
 
@@ -62,6 +63,24 @@ export function Produtos() {
             setProdutosFiltrados(produtosFiltrados);
         }
 
+        // Função Deletar Produtos
+        function onDelete() {
+            axios.delete(`http://localhost:3001/produtos/${idProduto}`)
+            .then((response) => {
+                toast.success(response.data.message, {
+                    position: "bottom-right",
+                    duration: 2000,
+                });
+                initializeTable();
+            }).catch((error) =>{
+                console.log(error);
+                toast.error(error.response.data.message, {
+                    position: "bottom-right",
+                    duration:2000
+                });
+            });
+            handleClose();
+        }
 
 
     return (
@@ -134,10 +153,10 @@ export function Produtos() {
                     </Modal.Header>
                     <Modal.Body>Tem certeza que deseja excluir o Produto?</Modal.Body>
                     <Modal.Footer>
-                        <Button variant="danger" onClick={handleClose}>
+                        <Button onClick={handleClose} variant="danger" >
                             Cancelar
                         </Button>
-                        <Button variant="primary" >
+                        <Button onClick={onDelete} variant="primary" >
                             Excluir
                         </Button>
                     </Modal.Footer>
