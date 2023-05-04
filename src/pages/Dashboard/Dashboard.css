@@ -1,0 +1,46 @@
+.div-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.div-container h1{
+    margin-top: 1%;
+}
+
+.div-dashboard{
+    border: 1px solid black;
+    background-color: #efefef  ;
+    border-radius: 15px;
+    width: 80%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.div-contador{
+    border: 1px solid #3b2712;
+    border-radius: 8px;
+    background-color: white;
+    width: 320px;
+    height: 150px;
+    margin: 3%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-contador h1{
+    color: #bb7122;
+}
+
+.botao-dashboard{
+    width: 90px;
+    height: 40px;
+    margin: 3px 5px;
+}
